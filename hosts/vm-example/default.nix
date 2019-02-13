@@ -4,18 +4,34 @@
 imports = [];
 
 i18n = {
-consoleFont = "Lat2-Terminus16";
-consoleKeyMap = "us";
-defaultLocale = "en_US.UTF-8";
+    #consoleFont = "Lat2-Terminus16";
+    #consoleKeyMap = "colemak";
+    consoleUseXkbConfig = true;
+    inputMethod = {
+      enabled = "ibus";
+      ibus.engines = with pkgs.ibus-engines; [
+        table
+        table-others # LaTeX support
+        m17n
+        uniemoji # ibus 1.5.14 has emoji support : P
+      ];
+    };
+    defaultLocale = "en_US.UTF-8";
 };
 
-time.timeZone = "America/Los_Angeles";
+services.xserver = {
+    layout = "us";
+    xkbVariant = "colemak";
+    xkbOptions = "ctrl:nocaps";
+};
+
+time.timeZone = "US/Eastern";
+services.localtime.enable = false;
 
 programs.mtr.enable = true;
 programs.bash.enableCompletion = true;
 
-networking.hostName = "themelios-vm";
-
+networking.hostName = "erdos";
 
 # system.stateVersion (set to the same version as the ISO installer)
 
